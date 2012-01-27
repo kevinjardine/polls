@@ -13,7 +13,7 @@ function polls_check_for_previous_vote($poll, $user_guid)
 		'type'	=>	"object",
 		'subtype' => "poll",
 		'annotation_name' => "vote",
-		'owner_guid' => $user_guid,
+		'annotation_owner_guid' => $user_guid,
 		'limit' => 1
 	);
 	$votes = elgg_get_annotations($options);
@@ -142,11 +142,14 @@ function polls_get_page_edit($page_type,$guid = 0) {
 	} else {
 		if ($guid) {
 			elgg_set_page_owner_guid($guid);
+			$container = get_entity($guid);
+			elgg_push_breadcrumb(elgg_echo('polls:group_polls'),'polls/group/'.$container->guid);
+		} else {
+			elgg_push_breadcrumb(elgg_echo('item:object:poll'),'polls/all');
 		}
 		$title = elgg_echo('polls:addpost');
 		$body_vars = array('fd'=>polls_prepare_edit_body_vars(),'container_guid'=>$guid);
 		$content = elgg_view_form("polls/edit",$form_vars,$body_vars);
-		elgg_push_breadcrumb(elgg_echo('item:object:poll'),'polls/all');
 		elgg_push_breadcrumb(elgg_echo('polls:add'));
 	}
 	
@@ -217,8 +220,8 @@ function polls_get_page_list($page_type, $container_guid = NULL) {
 			forward();
 		}
 		$crumbs_title = $group->name;
-		$return['title'] = elgg_echo('polls:group_polls', array(htmlspecialchars($crumbs_title)));
-		elgg_push_breadcrumb($crumbs_title);
+		$params['title'] = elgg_echo('polls:group_polls:listing:title', array(htmlspecialchars($crumbs_title)));
+		elgg_push_breadcrumb($crumbs_title,$group->getURL());
 		elgg_push_breadcrumb(elgg_echo('item:object:poll'));
 		elgg_push_context('groups');
 		elgg_set_page_owner_guid($container_guid);

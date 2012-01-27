@@ -27,8 +27,6 @@ if (elgg_instanceof($poll,'object','poll')) {
 		// Otherwise, save the poll vote
 	} else {
 
-		// Get owning user
-		$owner = get_entity($poll->getOwner());
 		$user_guid = elgg_get_logged_in_user_guid();
 		
 		// check to see if this user has already voted

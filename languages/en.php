@@ -11,7 +11,8 @@
 			'polls' => "Polls",
 			'polls:votes' => "votes",
 			'polls:user' => "%s's poll",
-			'polls:group_polls' => "Polls for %s",
+			'polls:group_polls' => "Group polls",
+			'polls:group_polls:listing:title' => "%s's polls",
 			'polls:user:friends' => "%s's friends' poll",
 			'polls:your' => "Your polls",
 			'polls:not_me' => "%s's polls",
@@ -49,6 +50,7 @@
 			'polls:permission_error' => "You do not have permission to edit this poll.",
 			'polls:vote' => "Vote",
 			'polls:login' => "Please login if you would like to vote in this poll.",
+			'group:polls:empty' => "No polls",
 		/**
 	     * poll widget
 	     **/

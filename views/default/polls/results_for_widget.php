@@ -45,11 +45,11 @@ if (isset($vars['entity'])) {
 			
 		//html
 		?>
-<div id="progress_indicator">
+<div class="progress_indicator">
 	<label><?php echo $response . " (" . $response_count . ")"; ?> </label><br>
-	<div id="progressBarContainer" align="left">
+	<div class="progressBarContainer" align="left">
 		<img src="<?php echo $img_src; ?>"
-			width="<?php echo $response_percentage; ?>%" height="12px">
+			width="<?php echo $response_percentage; ?>%">
 	</div>
 </div>
 <br>

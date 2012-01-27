@@ -70,18 +70,31 @@
 	width: 90%;
 }
 
-#progress_indicator {
+.progress_indicator {
 	width:200px;
 	padding: 5px;
 }
 	
-#progressBarContainer {
+.progressBarContainer {
 	height:12px;
 	width:100%;
 	border: 1px #00B0E4 solid;
+	padding: 0;
+	margin: 0;
+}
+
+.progressBarContainer img {
+	height: 12px;
+	vertical-align: top;
 }
 
 .poll-widget-title {
+	margin-bottom: 10px;
+}
+
+.polls-group-widget-box {
+	border: 1px solid #CCCCCC;
+	padding: 5px;
 	margin-bottom: 10px;
 }
 

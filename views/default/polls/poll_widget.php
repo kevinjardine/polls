@@ -10,7 +10,7 @@
 elgg_load_js('elgg.polls');
 ?>
 <h3><?php echo $vars['entity']->question; ?></h3>
-<div id="poll-container" class="poll_post">
+<div id="poll-container-<?php echo $vars['entity']->guid; ?>" class="poll_post">
 	<?php echo elgg_view('polls/poll_widget_content',$vars); ?>
 </div>
 	

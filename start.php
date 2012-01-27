@@ -25,6 +25,9 @@ function polls_init() {
 
 	// Register a URL handler for poll posts
 	elgg_register_entity_url_handler('object','poll','polls_url');
+	
+	// add link to owner block
+	elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'polls_owner_block_menu');
 
 	// Register entity type
 	elgg_register_entity_type('object','poll');
@@ -35,16 +38,9 @@ function polls_init() {
 	elgg_register_js('elgg.polls', $js);
 
 	// add group widget
-	//add to group profile page
-	// TODO: update this bit to Elgg 1.8
 	$group_polls = elgg_get_plugin_setting('group_polls', 'polls');
 	if (!$group_polls || $group_polls != 'no') {
-		$group_profile_display = elgg_get_plugin_setting('group_profile_display', 'polls');
-		if (!$group_profile_display || $group_profile_display == 'right') {
-			elgg_extend_view('groups/right_column', 'groups/grouppolls',1);
-		} else if ($group_profile_display == 'left') {
-			elgg_extend_view('groups/left_column', 'groups/grouppolls',1);
-		}
+		elgg_extend_view('groups/tool_latest', 'polls/group_module');
 	}
 
 	if (!$group_polls || ($group_polls == 'yes_default')) {
@@ -114,4 +110,23 @@ function polls_page_handler($page) {
 function polls_url($poll) {
 	$title = elgg_get_friendly_title($poll->title);
 	return  "polls/view/" . $poll->guid . "/" . $title;
+}
+
+/**
+ * Add a menu item to an owner block
+ */
+function polls_owner_block_menu($hook, $type, $return, $params) {
+	if (elgg_instanceof($params['entity'], 'user')) {
+		$url = "polls/owner/{$params['entity']->username}";
+		$item = new ElggMenuItem('polls', elgg_echo('polls'), $url);
+		$return[] = $item;
+	} else {
+		if (polls_activated_for_group($params['entity'])) {
+			$url = "polls/group/{$params['entity']->guid}/all";
+			$item = new ElggMenuItem('polls', elgg_echo('polls:group_polls'), $url);
+			$return[] = $item;
+		}
+	}
+
+	return $return;
 }
