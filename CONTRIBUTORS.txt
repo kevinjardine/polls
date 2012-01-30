@@ -6,6 +6,8 @@ Kevin Jardine at Radagast Solutions (kevin@radagast.biz) rewrote the original
 code to create the polls plugin for Elgg 1.6/1.7.
 
 Anirup Dutta removed some deprecated functions to create a preliminary version
-to work with elgg 1.8.
+to work with Elgg 1.8.
 
 Kevin Jardine rewrote the plugin completely for Elgg 1.8.
+
+Stephen Clay contributed some bug fixes and suggestions.
