@@ -39,7 +39,7 @@ function polls_get_choice_array($poll) {
 	$responses = array();
 	if ($choices) {
 		foreach($choices as $choice) {
-			$responses[] = $choice->text;
+			$responses[$choice->text] = $choice->text;
 		}
 	}
 	return $responses;
@@ -87,12 +87,12 @@ function polls_activated_for_group($group) {
 }
 
 function polls_can_add_to_group($group,$user=null) {
-	$polls_group_access = get_plugin_setting('group_access', 'polls');
+	$polls_group_access = elgg_get_plugin_setting('group_access', 'polls');
 	if (!$polls_group_access || $polls_group_access == 'admins') {
 		return $group->canEdit();
 	} else {
 		if (!$user) {
-			$user = get_loggedin_user();
+			$user = elgg_get_logged_in_user_guid();
 		}
 		return $group->canEdit() || $group->isMember($user);
 	}
