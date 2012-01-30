@@ -121,6 +121,7 @@ function polls_owner_block_menu($hook, $type, $return, $params) {
 		$item = new ElggMenuItem('polls', elgg_echo('polls'), $url);
 		$return[] = $item;
 	} else {
+		elgg_load_library('elgg:polls');
 		if (polls_activated_for_group($params['entity'])) {
 			$url = "polls/group/{$params['entity']->guid}/all";
 			$item = new ElggMenuItem('polls', elgg_echo('polls:group_polls'), $url);
