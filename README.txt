@@ -1,1 +1,1 @@
-First version.
+Put this in a mod/polls directory in your Elgg install.
