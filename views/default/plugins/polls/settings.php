@@ -5,8 +5,8 @@ elgg_echo('polls:settings:no')=>'no',
 );
 
 $yn_options = array(
-	'polls:settings:yes' => 'yes',
-	'polls:settings:no' => 'no',
+	elgg_echo('polls:settings:yes') => 'yes',
+	elgg_echo('polls:settings:no') => 'no',
 );
 
 $polls_create_in_river = elgg_get_plugin_setting('create_in_river', 'polls');
@@ -39,21 +39,6 @@ if (!$polls_group_polls) {
 $body .= elgg_echo('polls:settings:group:title');
 $body .= '<br />';
 $body .= elgg_view('input/radio',array('name'=>'params[group_polls]','value'=>$polls_group_polls,'options'=>$group_options));
-
-$body .= '<br />';
-
-$options = array(elgg_echo('polls:settings:group_profile_display_option:left')=>'left',
-	elgg_echo('polls:settings:group_profile_display_option:right')=>'right',
-	elgg_echo('polls:settings:group_profile_display_option:none')=>'none',
-);
-
-$polls_group_profile_display = elgg_get_plugin_setting('group_profile_display', 'polls');
-if (!$polls_group_profile_display) {
-	$polls_group_profile_display = 'left';
-}
-
-$body .= elgg_echo('polls:settings:group_profile_display:title').'<br />';
-$body .= elgg_view('input/radio',array('name'=>'params[group_profile_display]','value'=>$polls_group_profile_display,'options'=>$options));
 
 $body .= '<br />';
 
