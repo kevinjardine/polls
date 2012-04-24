@@ -88,6 +88,11 @@
 	vertical-align: top;
 }
 
+.polls-filled-bar {
+	background-color: #00B0E4;
+	height: 12px;
+}
+
 .poll-widget-title {
 	margin-bottom: 10px;
 }

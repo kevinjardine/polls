@@ -51,6 +51,10 @@
 			'polls:vote' => "Vote",
 			'polls:login' => "Please login if you would like to vote in this poll.",
 			'group:polls:empty' => "No polls",
+			'polls:settings:site_access:title' => "Who can create site-wide polls?",
+			'polls:settings:site_access:admins' => "Admins only",
+			'polls:settings:site_access:all' => "Any logged-in user",
+			'polls:can_not_create' => "You do not have permission to create polls.",
 		/**
 	     * poll widget
 	     **/

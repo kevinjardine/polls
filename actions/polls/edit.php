@@ -76,6 +76,16 @@ if ($guid) {
 		}
 	}
 } else {
+	if (!$container_guid) {
+		$polls_site_access = elgg_get_plugin_setting('site_access', 'polls');
+		$allowed = (elgg_is_logged_in() && ($polls_site_access != 'admins')) || elgg_is_admin_logged_in();		
+		if (!$allowed) {
+			register_error(elgg_echo('polls:can_not_create'));
+			elgg_clear_sticky_form('polls');
+			forward('polls/all');
+			exit;
+		}
+	}
 	// Make sure the question / responses aren't blank
 	if (empty($question) || ($count == 0)) {
 		register_error(elgg_echo("polls:blank"));

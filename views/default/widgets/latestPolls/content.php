@@ -22,7 +22,7 @@
 	$owner_guid = $vars['entity']->owner_guid;
 	$owner = elgg_get_page_owner_entity();
 	$options = array(
-		'type' => 'poll',
+		'type' => 'object',
 		'subtype'=>'poll',
 		'limit' => $limit,
 		'wheres' => array("e.owner_guid != $owner_guid"),

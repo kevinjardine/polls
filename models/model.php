@@ -268,7 +268,9 @@ function polls_get_page_list($page_type, $container_guid = NULL) {
 				break;
 		}
 		
-		if (elgg_is_logged_in()) {		
+		$polls_site_access = elgg_get_plugin_setting('site_access', 'polls');
+		
+		if ((elgg_is_logged_in() && ($polls_site_access != 'admins')) || elgg_is_admin_logged_in()) {		
 			elgg_register_menu_item('title', array(
 				'name' => 'add',
 				'href' => "polls/add",

@@ -57,5 +57,19 @@ $body .= elgg_view('input/radio',array('name'=>'params[group_access]','value'=>$
 
 $body .= '<br />';
 
+$polls_site_access_options = array(elgg_echo('polls:settings:site_access:admins')=>'admins',
+	elgg_echo('polls:settings:site_access:all')=>'all',
+);
+
+$polls_site_access = elgg_get_plugin_setting('site_access', 'polls');
+if (!$polls_site_access) {
+	$polls_site_access = 'all';
+}
+
+$body .= elgg_echo('polls:settings:site_access:title');
+$body .= '<br />';
+$body .= elgg_view('input/radio',array('name'=>'params[site_access]','value'=>$polls_site_access,'options'=>$polls_site_access_options));
+
+$body .= '<br />';
+
 echo $body;
-?>
