@@ -1,7 +1,7 @@
 <?php
 
 // TODO: add ability to reorder poll questions?
-$poll = $vars['poll'];
+$poll = elgg_extract('poll', $vars);
 $body = '';
 $i = 0;
 

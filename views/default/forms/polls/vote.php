@@ -16,7 +16,7 @@ else
 //convert $responses to radio inputs for form display
 $responses = polls_get_choice_array($poll);
  
-$response_inputs .= elgg_view('input/radio', array('name' => 'response','options' => $responses));
+$response_inputs = elgg_view('input/radio', array('name' => 'response','options' => $responses));
 
 $submit_input = '<br />'.elgg_view('input/submit', array('rel'=>$poll->guid,'class'=>'poll-vote-button','name' => 'submit_vote', 'value' => elgg_echo('polls:vote')));
 

@@ -82,8 +82,7 @@ if (isset($vars['entity'])) {
 			'entity' => $poll,
 			'metadata' => $metadata,
 			'subtitle' => $subtitle,
-			'tags' => $tags,
-			'content' => $excerpt,
+			'tags' => $tags
 		);
 		$params = $params + $vars;
 		$list_body = elgg_view('object/elements/summary', $params);

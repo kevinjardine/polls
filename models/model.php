@@ -124,7 +124,7 @@ function polls_get_page_edit($page_type,$guid = 0) {
 			);
 	
 			if ($poll->canEdit()) {
-				$content .= elgg_view_form("polls/edit", $form_vars, $body_vars);
+				$content = elgg_view_form("polls/edit", $form_vars, $body_vars);
 			} else {
 				$content = elgg_echo('polls:permission_error');
 			}

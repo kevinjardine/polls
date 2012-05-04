@@ -1,10 +1,10 @@
 <?php
 elgg_load_library('elgg:polls');
 
-$poll = $vars['entity'];
+$poll = elgg_extract('entity', $vars);
 
-if($vars['msg']) {
-	echo '<p>'.$vars['msg'].'</p>';
+if($msg = elgg_extract('msg', $vars)) {
+	echo '<p>'.$msg.'</p>';
 }
 
 if (elgg_is_logged_in()) {
