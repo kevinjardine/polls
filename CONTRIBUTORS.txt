@@ -11,3 +11,7 @@ to work with Elgg 1.8.
 Kevin Jardine rewrote the plugin completely for Elgg 1.8.
 
 Stephen Clay contributed some bug fixes and suggestions.
+
+Jerome Bakker (http://www.coldtrick.com) contributed some missing language
+strings, title and breadcrumb fixes and fixes to eliminate PHP
+warnings/notifications.
