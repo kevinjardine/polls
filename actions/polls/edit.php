@@ -12,6 +12,7 @@ elgg_make_sticky_form('polls');
 // Get input data
 $question = get_input('question');
 $number_of_choices = (int) get_input('number_of_choices',0);
+$front_page = get_input('front_page');
 $tags = get_input('tags');
 $access_id = get_input('access_id');
 $container_guid = get_input('container_guid');
@@ -66,6 +67,7 @@ if ($guid) {
 			
 			polls_delete_choices($poll);
 			polls_add_choices($poll,$new_choices);
+			polls_manage_front_page($poll,$front_page);
 		
 			if (is_array($tagarray)) {
 				$poll->tags = $tagarray;
@@ -125,6 +127,7 @@ if ($guid) {
 		elgg_clear_sticky_form('polls');
 
 		polls_add_choices($poll,$new_choices);
+		polls_manage_front_page($poll,$front_page);
 	
 		if (is_array($tagarray)) {
 			$poll->tags = $tagarray;

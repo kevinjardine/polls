@@ -72,4 +72,15 @@ $body .= elgg_view('input/radio',array('name'=>'params[site_access]','value'=>$p
 
 $body .= '<br />';
 
+$polls_front_page = elgg_get_plugin_setting('front_page', 'polls');
+if (!$polls_front_page) {
+	$polls_front_page = 'no';
+}
+
+$body .= elgg_echo('polls:settings:front_page:title');
+$body .= '<br />';
+$body .= elgg_view('input/radio',array('name'=>'params[front_page]','value'=>$polls_front_page,'options'=>$yn_options));
+
+$body .= '<br />';
+
 echo $body;

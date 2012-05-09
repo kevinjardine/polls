@@ -190,6 +190,7 @@ function polls_prepare_edit_body_vars($poll = NULL) {
 	$values = array(
 		'question' => NULL,
 		'tags' => NULL,
+		'front_page' => NULL,
 		'access_id' => ACCESS_DEFAULT,
 		'guid' => NULL,
 	);
@@ -372,4 +373,30 @@ function polls_get_response_count($valueToCount, $fromArray) {
 	}
 	
 	return $count;
+}
+
+function polls_manage_front_page($poll,$front_page) {
+	$poll_front_page = elgg_get_plugin_setting('front_page','polls');
+	if(elgg_is_admin_logged_in() && ($poll_front_page == 'yes')) {
+		$options = array(
+			'type' => 'object',
+			'subtype' => 'poll',
+			'metadata_name_value_pairs' => array(array('name'=>'front_page','value'=>1)),
+			'limit' => 1,
+		);
+		$polls = elgg_get_entities_from_metadata($options);
+		if ($polls) {
+			$front_page_poll = $polls[0];
+			if ($front_page_poll->guid == $poll->guid) {
+				if (!$front_page) {
+					$front_page_poll->front_page = 0;				
+				}
+			} else {
+				$front_page_poll->front_page = 0;
+				$poll->front_page = 1;
+			}
+		} else {
+			$poll->front_page = 1;
+		}
+	}
 }

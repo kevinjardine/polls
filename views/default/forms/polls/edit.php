@@ -25,6 +25,21 @@ $access_input = elgg_view('input/access', array('name' => 'access_id', 'value' =
 $submit_input = elgg_view('input/submit', array('name' => 'submit', 'value' => elgg_echo('save')));
 $submit_input .= ' '.elgg_view('input/button', array('name' => 'cancel', 'id' => 'polls_edit_cancel', 'type'=> 'button', 'value' => elgg_echo('cancel')));
 
+$poll_front_page = elgg_get_plugin_setting('front_page','polls');
+
+if(elgg_is_admin_logged_in() && ($poll_front_page == 'yes')) {
+	$front_page_input = '<p>';
+	if ($vars['fd']['front_page']) {
+		$front_page_input .= elgg_view('input/checkbox',array('name'=>'front_page','value'=>1,'checked'=>'checked'));
+	} else {
+		$front_page_input .= elgg_view('input/checkbox',array('name'=>'front_page','value'=>1));
+	}
+	$front_page_input .= elgg_echo('polls:front_page_label');
+	$front_page_input .= '</p>';
+} else {
+	$front_page_input = '';
+}
+
 if (isset($vars['entity'])) {
 	$entity_hidden = elgg_view('input/hidden', array('name' => 'guid', 'value' => $guid));
 } else {
@@ -46,6 +61,7 @@ echo <<<__HTML
 			<label>$tag_label</label><br />
 			$tag_input
 		</p>
+		$front_page_input
 		<p>
 			<label>$access_label</label><br />
 			$access_input
