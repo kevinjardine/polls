@@ -1,6 +1,7 @@
 <?php
-if (isset($vars['entity'])) {
-	$guid = $vars['entity']->guid;
+$poll = elgg_extract('entity', $vars);
+if ($poll) {
+	$guid = $poll->guid;
 } else  {
 	$guid = 0;
 }
@@ -13,7 +14,7 @@ $question_label = elgg_echo('polls:question');
 $question_textbox = elgg_view('input/text', array('name' => 'question', 'value' => $question));
 
 $responses_label = elgg_echo('polls:responses');
-$responses_control = elgg_view('polls/input/choices',array('poll'=>$vars['entity']));
+$responses_control = elgg_view('polls/input/choices',array('poll'=>$poll));
 
 $tag_label = elgg_echo('tags');
 $tag_input = elgg_view('input/tags', array('name' => 'tags', 'value' => $tags));

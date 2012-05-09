@@ -82,7 +82,11 @@ function polls_page_handler($page) {
 			break;
 		case "add":			
 		case "edit":
-			echo polls_get_page_edit($page_type,$page[1]);
+			$container = null;
+			if(isset($page[1])){
+				$container = $page[1];
+			}
+			echo polls_get_page_edit($page_type,$container);
 			break;
 		case "friends":
 		case "owner":

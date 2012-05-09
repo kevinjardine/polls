@@ -116,7 +116,7 @@ function polls_get_page_edit($page_type,$guid = 0) {
 		if (elgg_instanceof($poll,'object','poll')) {
 			$container_guid = $poll->container_guid;
 			elgg_set_page_owner_guid($container_guid);
-			$title = sprintf(elgg_echo('polls:editpost'),$poll->title);
+			$title = elgg_echo('polls:editpost', array($poll->title));
 			
 			$body_vars = array(
 				'fd' => polls_prepare_edit_body_vars($poll),
@@ -124,33 +124,44 @@ function polls_get_page_edit($page_type,$guid = 0) {
 			);
 	
 			if ($poll->canEdit()) {
-				$content .= elgg_view_form("polls/edit", $form_vars, $body_vars);
+				$content = elgg_view_form("polls/edit", $form_vars, $body_vars);
 			} else {
 				$content = elgg_echo('polls:permission_error');
 			}
+			
+			// set breadcrumb
+			elgg_push_breadcrumb(elgg_echo('item:object:poll'),'polls/all');
+			
 			$container = get_entity($container_guid);
 			if (elgg_instanceof($container,'group')) {
-				elgg_push_breadcrumb(elgg_echo('item:object:poll'),'polls/group/'.$container->guid);
+				elgg_push_breadcrumb($container->name, 'polls/group/' . $container->getGUID());
 			} else {
-				elgg_push_breadcrumb(elgg_echo('item:object:poll'),'polls/all');
+				elgg_push_breadcrumb($container->name, 'polls/owner/' . $container->username);
 			}
-			elgg_push_breadcrumb(elgg_echo('polls:edit'));
+			elgg_push_breadcrumb(elgg_echo("polls:edit"));
 		} else {
 			$title = elgg_echo('polls:error_title');
 			$content = elgg_echo('polls:no_such_poll');
 		}
 	} else {
+		// set breadcrumb
+		elgg_push_breadcrumb(elgg_echo('item:object:poll'),'polls/all');
 		if ($guid) {
 			elgg_set_page_owner_guid($guid);
 			$container = get_entity($guid);
-			elgg_push_breadcrumb(elgg_echo('polls:group_polls'),'polls/group/'.$container->guid);
+			
+			elgg_push_breadcrumb($container->name, 'polls/group/' . $container->getGUID());
 		} else {
-			elgg_push_breadcrumb(elgg_echo('item:object:poll'),'polls/all');
+			$user = elgg_get_logged_in_user_entity();
+			elgg_set_page_owner_guid($user->getGUID());
+			
+			elgg_push_breadcrumb($user->name, 'polls/owner/' . $user->username);
 		}
+		elgg_push_breadcrumb(elgg_echo('polls:add'));
+		
 		$title = elgg_echo('polls:addpost');
 		$body_vars = array('fd'=>polls_prepare_edit_body_vars(),'container_guid'=>$guid);
 		$content = elgg_view_form("polls/edit",$form_vars,$body_vars);
-		elgg_push_breadcrumb(elgg_echo('polls:add'));
 	}
 	
 	$params = array(
@@ -214,6 +225,10 @@ function polls_get_page_list($page_type, $container_guid = NULL) {
 		'full_view' => FALSE, 
 		'limit'=>15,
 	);
+	
+	// set breadcrumb
+	elgg_push_breadcrumb(elgg_echo('item:object:poll'), 'polls/all');
+	
 	if ($page_type == 'group') {
 		$group = get_entity($container_guid);
 		if (!elgg_instanceof($group,'group') || !polls_activated_for_group($group)) {
@@ -221,11 +236,16 @@ function polls_get_page_list($page_type, $container_guid = NULL) {
 		}
 		$crumbs_title = $group->name;
 		$params['title'] = elgg_echo('polls:group_polls:listing:title', array(htmlspecialchars($crumbs_title)));
-		elgg_push_breadcrumb($crumbs_title,$group->getURL());
-		elgg_push_breadcrumb(elgg_echo('item:object:poll'));
+		$params['filter'] = "";
+		
+		// set breadcrumb
+		elgg_push_breadcrumb($crumbs_title);
+		
 		elgg_push_context('groups');
+		
 		elgg_set_page_owner_guid($container_guid);
 		group_gatekeeper();
+		
 		$options['container_guid'] = $container_guid;
 		$user_guid = elgg_get_logged_in_user_guid();
 		if (elgg_get_page_owner_entity()->canWriteToContainer($user_guid)){
@@ -240,31 +260,37 @@ function polls_get_page_list($page_type, $container_guid = NULL) {
 	} else {
 		switch ($page_type) {
 			case 'owner':
-				$params['filter_context'] = 'mine';
 				$options['owner_guid'] = $container_guid;
-				if ($user->guid = $container_guid) {
+				
+				$container_entity = get_user($container_guid);
+				elgg_push_breadcrumb($container_entity->name);
+				
+				if ($user->guid == $container_guid) {
 					$params['title'] = elgg_echo('polls:your');
+					$params['filter_context'] = 'mine';
 				} else {
-					$params['title'] = elgg_echo('polls:not_me',array(htmlspecialchars($user->name)));
+					$params['title'] = elgg_echo('polls:not_me',array(htmlspecialchars($container_entity->name)));
+					$params['filter_context'] = "";
 				}
-				elgg_push_breadcrumb(elgg_echo('item:object:poll'));
 				break;
 			case 'friends':
+				$container_entity = get_user($container_guid);
 				$friends = get_user_friends($container_guid, ELGG_ENTITIES_ANY_VALUE, 0);
+				
 				$options['container_guids'] = array();
 				foreach ($friends as $friend) {
 					$options['container_guids'][] = $friend->getGUID();
 				}
+				
 				$params['filter_context'] = 'friends';
 				$params['title'] = elgg_echo('polls:friends');
-				$crumbs_title = $user->name;
-				elgg_push_breadcrumb($crumbs_title, "polls/owner/{$user->username}");
+				
+				elgg_push_breadcrumb($container_entity->name, "polls/owner/{$container_entity->username}");
 				elgg_push_breadcrumb(elgg_echo('friends'));
 				break;
 			case 'all':
 				$params['filter_context'] = 'all';
 				$params['title'] = elgg_echo('item:object:poll');
-				elgg_push_breadcrumb(elgg_echo('item:object:poll'));
 				break;
 		}
 		
@@ -308,8 +334,10 @@ function polls_get_page_view($guid) {
 		if ($poll->comments_on != 'Off') {
 			$content .= elgg_view_comments($poll);
 		}
+		
+		elgg_push_breadcrumb(elgg_echo('item:object:poll'), "polls/all");
 		if (elgg_instanceof($page_owner,'user')) {
-			elgg_push_breadcrumb(elgg_echo('item:object:poll'), "polls/all");
+			elgg_push_breadcrumb($page_owner->name, "polls/owner/{$page_owner->username}");
 		} else {
 			elgg_push_breadcrumb($page_owner->name, "polls/group/{$page_owner->guid}");
 		}
