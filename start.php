@@ -28,6 +28,7 @@ function polls_init() {
 	
 	// add link to owner block
 	elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'polls_owner_block_menu');
+	elgg_register_plugin_hook_handler('widget_url', 'widget_manager', 'polls_widget_url_handler');
 
 	// Register entity type
 	elgg_register_entity_type('object','poll');
@@ -50,9 +51,9 @@ function polls_init() {
 	}
 
 	//add widgets
-	elgg_register_widget_type('poll',elgg_echo('polls:my_widget_title'),elgg_echo('polls:my_widget_description'));
-	elgg_register_widget_type('latestPolls',elgg_echo('polls:latest_widget_title'),elgg_echo('polls:latest_widget_description'));
-	elgg_register_widget_type('poll_individual',elgg_echo('polls:individual'),elgg_echo('poll_individual_group:widget:description'));	
+	elgg_register_widget_type('poll',elgg_echo('polls:my_widget_title'),elgg_echo('polls:my_widget_description'), "profile,groups");
+	elgg_register_widget_type('latestPolls',elgg_echo('polls:latest_widget_title'),elgg_echo('polls:latest_widget_description'), "index,profile,dashboard,groups");
+	elgg_register_widget_type('poll_individual',elgg_echo('polls:individual'),elgg_echo('poll_individual_group:widget:description'), "index,profile,dashboard,groups");	
 	
 	// Register actions
 	$action_path = elgg_get_plugins_path() . 'polls/actions/polls';
@@ -134,4 +135,36 @@ function polls_owner_block_menu($hook, $type, $return, $params) {
 	}
 
 	return $return;
+}
+
+function polls_widget_url_handler($hook, $type, $return, $params){
+	$result = $return;
+
+	if(empty($result) && !empty($params) && is_array($params)){
+		$widget = elgg_extract("entity", $params);
+
+		if(!empty($widget) && elgg_instanceof($widget, "object", "widget")){
+			switch($widget->handler){
+				case "latestPolls":
+					if($widget->context == "groups"){
+						$result = "polls/group/" . $widget->getOwnerGUID() . "/all";
+					} else {
+						$result = "polls/all";
+					}
+					break;
+				case "poll":
+					if($widget->context == "groups"){
+						$result = "polls/group/" . $widget->getOwnerGUID() . "/all";
+					} else {
+						$result = "polls/owner/" . $widget->getOwnerEntity()->username . "/all";
+					}
+					break;
+				case "poll_individual":
+						
+					break;
+			}
+		}
+	}
+
+	return $result;
 }
