@@ -78,7 +78,7 @@ __HTML;
 <script type="text/javascript">
 $('#polls_edit_cancel').click(
 	function() {
-		window.location.href="<?php echo $vars['url'].'pg/polls/list/'.(elgg_get_page_owner_entity()->username); ?>";
+		window.location.href="<?php echo elgg_get_site_url().'pg/polls/list/'.(elgg_get_page_owner_entity()->username); ?>";
 	}
 );
 </script>

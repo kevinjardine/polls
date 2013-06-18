@@ -13,5 +13,5 @@
 ?>
 
 	<p class="user_menu_poll">
-		<a href="<?php echo $vars['url']; ?>pg/polls/list/<?php echo $vars['entity']->username; ?>"><?php echo elgg_echo("poll"); ?></a>	
+		<a href="<?php echo elgg_get_site_url(); ?>pg/polls/list/<?php echo $vars['entity']->username; ?>"><?php echo elgg_echo("poll"); ?></a>	
 	</p>
