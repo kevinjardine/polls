@@ -27,8 +27,11 @@ function polls_init() {
 	elgg_register_entity_url_handler('object','poll','polls_url');
 
 	// notifications
-	elgg_register_notification_event('object', 'poll');
-	elgg_register_plugin_hook_handler('prepare', 'notification:create:object:poll', 'polls_prepare_notification');
+	$send_notification = elgg_get_plugin_setting('send_notification', 'polls');
+	if (!$send_notification || $send_notification != 'no') {
+		elgg_register_notification_event('object', 'poll');
+		elgg_register_plugin_hook_handler('prepare', 'notification:create:object:poll', 'polls_prepare_notification');
+	}
 	
 	// add link to owner block
 	elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'polls_owner_block_menu');

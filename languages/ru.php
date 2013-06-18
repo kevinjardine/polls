@@ -91,6 +91,7 @@
 	     **/
 	        'polls:settings:create_in_river:title' => "Показывать создание опрососв в ленте активности",
 			'polls:settings:vote_in_river:title' => "Показывать голосования в ленте активности",
+			'polls:settings:send_notification:title' => "Отправлять уведомление о новом опросе",
 			'river:create:object:poll' => '%s создал опрос %s',
 			'river:vote:object:poll' => '%s проголосовал в опросе %s',
 			'river:comment:object:poll' => '%s комментировал опрос %s',
