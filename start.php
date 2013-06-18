@@ -25,6 +25,10 @@ function polls_init() {
 
 	// Register a URL handler for poll posts
 	elgg_register_entity_url_handler('object','poll','polls_url');
+
+	// notifications
+	elgg_register_notification_event('object', 'poll');
+	elgg_register_plugin_hook_handler('prepare', 'notification:create:object:poll', 'polls_prepare_notification');
 	
 	// add link to owner block
 	elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'polls_owner_block_menu');
@@ -135,6 +139,33 @@ function polls_owner_block_menu($hook, $type, $return, $params) {
 	}
 
 	return $return;
+}
+
+/**
+ * Prepare a notification message about a created poll
+ *
+ * @param string                          $hook         Hook name
+ * @param string                          $type         Hook type
+ * @param Elgg_Notifications_Notification $notification The notification to prepare
+ * @param array                           $params       Hook parameters
+ * @return Elgg_Notifications_Notification
+ */
+function polls_prepare_notification($hook, $type, $notification, $params) {
+	$entity = $params['event']->getObject();
+	$owner = $params['event']->getActor();
+	$recipient = $params['recipient'];
+	$language = $params['language'];
+	$method = $params['method'];
+
+	$notification->subject = elgg_echo('polls:add', array(), $language);
+	$notification->body = elgg_echo('polls:notification', array(
+		$owner->name,
+		$entity->title,
+		$entity->getURL()
+	), $language);
+	$notification->summary = elgg_echo('polls:notify:summary', array($entity->title), $language);
+
+	return $notification;
 }
 
 function polls_widget_url_handler($hook, $type, $return, $params){

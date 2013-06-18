@@ -78,6 +78,18 @@
 			'polls:noun_responses' => "responses",
 	        'polls:settings:yes' => "yes",
 			'polls:settings:no' => "no",
+
+			// notifications
+			'polls:notify:summary' => 'New poll called %s',
+			'polls:notification' =>
+'
+%s created a poll.
+
+%s
+
+View and vote on the new poll:
+%s
+',
 			
          /**
 	     * poll river

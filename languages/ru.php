@@ -78,6 +78,13 @@
 			'polls:noun_responses' => "ответы",
 	        'polls:settings:yes' => "да",
 			'polls:settings:no' => "нет",
+
+			// notifications
+			'polls:notify:summary' => 'Новый опрос %s',
+			'polls:notification' =>
+'%s добавил[а] новый опрос: <br><br>
+%s<br><br>
+Для просмотра и голосования нажмите на <a href="%s">эту ссылку</a>.',
 			
          /**
 	     * poll river
