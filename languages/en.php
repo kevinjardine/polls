@@ -78,12 +78,25 @@
 			'polls:noun_responses' => "responses",
 	        'polls:settings:yes' => "yes",
 			'polls:settings:no' => "no",
+
+			// notifications
+			'polls:notify:summary' => 'New poll called %s',
+			'polls:notification' =>
+'
+%s created a poll.
+
+%s
+
+View and vote on the new poll:
+%s
+',
 			
          /**
 	     * poll river
 	     **/
 	        'polls:settings:create_in_river:title' => "Show poll creation in activity river",
 			'polls:settings:vote_in_river:title' => "Show poll voting in activity river",
+			'polls:settings:send_notification:title' => "Send notification when poll is created",
 			'river:create:object:poll' => '%s created a poll %s',
 			'river:vote:object:poll' => '%s voted on the poll %s',
 			'river:comment:object:poll' => '%s commented on the poll %s',

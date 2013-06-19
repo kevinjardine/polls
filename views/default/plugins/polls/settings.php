@@ -9,6 +9,17 @@ $yn_options = array(
 	elgg_echo('polls:settings:no') => 'no',
 );
 
+$polls_send_notification = elgg_get_plugin_setting('send_notification', 'polls');
+if (!$polls_send_notification) {
+	$polls_send_notification = 'yes';
+}
+
+$body .= elgg_echo('polls:settings:send_notification:title');
+$body .= '<br />';
+$body .= elgg_view('input/radio',array('name'=>'params[send_notification]','value'=>$polls_send_notification,'options'=>$yn_options));
+
+$body .= '<br />';
+
 $polls_create_in_river = elgg_get_plugin_setting('create_in_river', 'polls');
 if (!$polls_create_in_river) {
 	$polls_create_in_river = 'yes';

@@ -43,7 +43,7 @@
 	line-height:1em;
 }
 .poll_post p.tags {
-	background:transparent url(<?php echo $vars['url']; ?>_graphics/icon_tag.gif) no-repeat scroll left 2px;
+	background:transparent url(<?php echo elgg_get_site_url(); ?>_graphics/icon_tag.gif) no-repeat scroll left 2px;
 	margin:0 0 7px 35px;
 	padding:0pt 0pt 0pt 16px;
 	min-height:22px;
@@ -108,14 +108,14 @@
 *************************************** */
 
 .river_object_poll_create {
-	background: url(<?php echo $vars['url']; ?>mod/polls/graphics/river_icon_poll.gif) no-repeat left -1px;
+	background: url(<?php echo elgg_get_site_url(); ?>mod/polls/graphics/river_icon_poll.gif) no-repeat left -1px;
 }
 .river_object_poll_update {
-	background: url(<?php echo $vars['url']; ?>mod/polls/graphics/river_icon_poll.gif) no-repeat left -1px;
+	background: url(<?php echo elgg_get_site_url(); ?>mod/polls/graphics/river_icon_poll.gif) no-repeat left -1px;
 }
 .river_object_poll_comment {
-	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_comment.gif) no-repeat left -1px;
+	background: url(<?php echo elgg_get_site_url(); ?>_graphics/river_icons/river_icon_comment.gif) no-repeat left -1px;
 }
 .river_object_poll_vote {
-	background: url(<?php echo $vars['url']; ?>mod/polls/graphics/river_icon_vote.gif) no-repeat left -1px;
+	background: url(<?php echo elgg_get_site_url(); ?>mod/polls/graphics/river_icon_vote.gif) no-repeat left -1px;
 }

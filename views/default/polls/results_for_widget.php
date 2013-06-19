@@ -13,7 +13,7 @@
 if (isset($vars['entity'])) {
 
 	//set img src
-	$img_src = $vars['url'] . "mod/polls/graphics/poll.gif";
+	$img_src = elgg_get_site_url() . "mod/polls/graphics/poll.gif";
 
 	$question = $vars['entity']->question;
 
