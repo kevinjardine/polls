@@ -27,19 +27,22 @@ function polls_init() {
 	elgg_register_entity_url_handler('object','poll','polls_url');
 
 	// notifications
-	$send_notification = elgg_get_plugin_setting('send_notification', 'polls');
-	if (!$send_notification || $send_notification != 'no') {
-		elgg_register_notification_event('object', 'poll');
-		elgg_register_plugin_hook_handler('prepare', 'notification:create:object:poll', 'polls_prepare_notification');
+	$elgg_version = explode('.',get_version(true));
+	if ($elgg_version[1] > 8) {
+  	$send_notification = elgg_get_plugin_setting('send_notification', 'polls');
+  	if (!$send_notification || $send_notification != 'no') {
+  		elgg_register_notification_event('object', 'poll');
+  		elgg_register_plugin_hook_handler('prepare', 'notification:create:object:poll', 'polls_prepare_notification');
+  	}
 	}
-	
+
 	// add link to owner block
 	elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'polls_owner_block_menu');
 	elgg_register_plugin_hook_handler('widget_url', 'widget_manager', 'polls_widget_url_handler');
 
 	// Register entity type
 	elgg_register_entity_type('object','poll');
-	
+
 	// register the JavaScript
 	$js = elgg_get_simplecache_url('js', 'polls/js');
 	elgg_register_simplecache_view('js/polls/js');
@@ -60,8 +63,8 @@ function polls_init() {
 	//add widgets
 	elgg_register_widget_type('poll',elgg_echo('polls:my_widget_title'),elgg_echo('polls:my_widget_description'), "profile,groups");
 	elgg_register_widget_type('latestPolls',elgg_echo('polls:latest_widget_title'),elgg_echo('polls:latest_widget_description'), "index,profile,dashboard,groups");
-	elgg_register_widget_type('poll_individual',elgg_echo('polls:individual'),elgg_echo('poll_individual_group:widget:description'), "index,profile,dashboard,groups");	
-	
+	elgg_register_widget_type('poll_individual',elgg_echo('polls:individual'),elgg_echo('poll_individual_group:widget:description'), "index,profile,dashboard,groups");
+
 	// Register actions
 	$action_path = elgg_get_plugins_path() . 'polls/actions/polls';
 	elgg_register_action("polls/add","$action_path/add.php");
@@ -82,13 +85,13 @@ function polls_page_handler($page) {
 	elgg_load_library('elgg:polls');
 	$page_type = $page[0];
 	switch($page_type) {
-		case "view":		
+		case "view":
 			echo polls_get_page_view($page[1]);
 			break;
-		case "all":			
+		case "all":
 			echo polls_get_page_list($page_type);
 			break;
-		case "add":			
+		case "add":
 		case "edit":
 			$container = null;
 			if(isset($page[1])){
@@ -194,7 +197,7 @@ function polls_widget_url_handler($hook, $type, $return, $params){
 					}
 					break;
 				case "poll_individual":
-						
+
 					break;
 			}
 		}
